@@ -46,6 +46,9 @@ def register(request):
 
 from django.contrib.auth.decorators import login_required
 
+from django.contrib import messages
+
+
 @login_required
 def edit(request):
     if request.method == 'POST':
@@ -61,7 +64,14 @@ def edit(request):
             user_form.save()
             profile_form.save()
             # this used when u submit this will redirect
+
+            messages.success(request, "Profile updated " "successfully")
+            # return render(request,'account/dashboard.html')
+        else:
+            messages.error(request, 'Error updating your profile')
+
             return render(request,'account/dashboard.html')
+
     else:
         user_form = UserEditForm(instance=request.user)
         profile_form = ProfileEditForm(instance=request.user.profile)
