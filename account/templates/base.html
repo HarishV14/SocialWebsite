@@ -31,7 +31,10 @@
                         <!-- this onchange form will be submitted and get method it goes view function redirect and ther 
                                          it will use redirect function-->
                         <select name="redirect" onchange="this.form.submit()">
+
                             <option value="">Setting</option>
+
+                            <option value="">Select an option</option>
                             <option value="{% url 'password_change' %}">Password</option>
                             <option value="{% url 'edit' %}">Edit</option>
                             <!-- Add more options as needed -->
@@ -52,6 +55,11 @@
             {% endfor %}
         </ul>
         {% endif %}
+
+
+               
+            </span>
+        </div>
         <div id="content">
             {% block content %}
             {% endblock %}
