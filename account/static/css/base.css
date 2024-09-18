@@ -51,6 +51,9 @@ body {
     top: 20px;
     right: 20px;
 }
+#header .user a{
+    color: white;
+}
 
 /* Content */
 #content {

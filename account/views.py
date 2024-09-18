@@ -30,3 +30,15 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def dashboard(request):
     return render(request, "account/dashboard.html", {"section": "dashboard"})
+
+
+
+#this for the redirecting url there select when changes form submit and comes to this and give that selcet value
+#in the redirect url
+from django.shortcuts import redirect
+
+def redirect_view(request):
+    redirect_url = request.GET.get("redirect")
+    if redirect_url:
+        return redirect(redirect_url)
+    return redirect("")
