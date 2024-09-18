@@ -5,9 +5,11 @@ from . import views
 urlpatterns = [
     # this custome login view
     # path('login/',views.user_login,name='login')
-    
     path("", views.dashboard, name="dashboard"),
     path("redirect/", views.redirect_view, name="redirect"),
+    path("register/", views.register, name="register"),
+    path("edit/", views.edit, name="edit"),
+    
     # this inbuild login view functionalities
     # login and logout
     path("login/", auth_views.LoginView.as_view(), name="login"),
@@ -22,7 +24,6 @@ urlpatterns = [
         auth_views.PasswordChangeDoneView.as_view(),
         name="password_change_done",
     ),
-    
     # reset password urls
     path(
         "password_reset/", auth_views.PasswordResetView.as_view(), name="password_reset"

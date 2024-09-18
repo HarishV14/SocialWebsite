@@ -27,18 +27,20 @@
                 {% if request.user.is_authenticated %}
                     Hello {{ request.user.first_name }},
                     <a href="{% url 'logout' %}">Logout</a>
+                    <form method="get" action="{% url 'redirect' %}">
+                        <!-- this onchange form will be submitted and get method it goes view function redirect and ther 
+                                         it will use redirect function-->
+                        <select name="redirect" onchange="this.form.submit()">
+                            <option value="">Select an option</option>
+                            <option value="{% url 'password_change' %}">Password</option>
+                            <option value="{% url 'edit' %}">Edit</option>
+                            <!-- Add more options as needed -->
+                        </select>
+                    </form>
                     {% else %}
                     <a href="{% url 'login' %}">Log-in</a>
                     {% endif %}
-                <form method="get" action="{% url 'redirect' %}">
-                    <!-- this onchange form will be submitted and get method it goes view function redirect and ther 
-                     it will use redirect function-->
-                    <select name="redirect" onchange="this.form.submit()"> 
-                        <option value="">Select an option</option>
-                        <option value="{% url 'password_change' %}">Password</option>
-                        <!-- Add more options as needed -->
-                    </select>
-                </form>
+
                
             </span>
         </div>
