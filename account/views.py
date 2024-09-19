@@ -69,8 +69,7 @@ def edit(request):
             # return render(request,'account/dashboard.html')
         else:
             messages.error(request, 'Error updating your profile')
-
-            return render(request,'account/dashboard.html')
+        # return render(request,'account/dashboard.html')
 
     else:
         user_form = UserEditForm(instance=request.user)
@@ -91,4 +90,4 @@ def redirect_view(request):
     redirect_url = request.GET.get("redirect")
     if redirect_url:
         return redirect(redirect_url)
-    return redirect("")
+    return redirect("default")
