@@ -51,6 +51,7 @@ from django.contrib import messages
 
 @login_required
 def edit(request):
+    profile, created = Profile.objects.get_or_create(user=request.user)
     if request.method == 'POST':
         '''instance-This means that when the form is rendered, it will be 
                     pre-populated with the user's current information, allowing them 
@@ -59,7 +60,9 @@ def edit(request):
                         via an HTTP POST request
         '''
         user_form = UserEditForm(instance=request.user,data=request.POST)
-        profile_form = ProfileEditForm(instance=request.user.profile,data=request.POST,files=request.FILES)
+        profile_form = ProfileEditForm(
+            instance=profile, data=request.POST, files=request.FILES
+        )
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
@@ -73,7 +76,7 @@ def edit(request):
 
     else:
         user_form = UserEditForm(instance=request.user)
-        profile_form = ProfileEditForm(instance=request.user.profile)
+        profile_form = ProfileEditForm(instance=profile)
     return render(request,'account/edit.html',{'user_form': user_form,'profile_form': profile_form})
 
 
