@@ -28,8 +28,72 @@ def image_create(request):
 from django.shortcuts import get_object_or_404
 from .models import Image
 
+@login_required
 def image_detail(request, id, slug):
     image = get_object_or_404(Image, id=id, slug=slug)
     return render(
         request, "images/image/detail.html", {"section": "images", "image": image}
     )
+
+
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from common.decorators import ajax_required
+
+# ajax_required directly with your browser, you will get an HTTP 400 response. it used for restriction
+@ajax_required
+@login_required
+@require_POST
+def image_like(request):
+    image_id = request.POST.get('id')
+    action = request.POST.get('action')
+    print(image_id,action)
+    if image_id and action:
+        try:
+            image = Image.objects.get(id=image_id)
+            if action == 'like':
+                #in request.user who is logged in the user 
+                image.users_like.add(request.user)
+            else:
+                image.users_like.remove(request.user)
+            return JsonResponse({'status':'ok'})
+        except:
+            pass
+        return JsonResponse({'status':'error'})
+
+
+
+from django.http import HttpResponse
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+ """
+    @ it also includes the ajax for pagination when scrolling it mixed of ajax
+      and both non ajax 
+    @ in intial there is no ajax called this were checked by request.is_ajax 
+    @ when scroll ajax will be called and trigger the ajax then the list_ajax.html will be used
+    @ In non ajax time the normal list.html will be used
+
+"""
+
+@login_required
+def image_list(request):
+    images = Image.objects.all()
+    paginator = Paginator(images, 8)
+    page = request.GET.get('page')
+    try:
+        images = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer deliver the first page
+        images = paginator.page(1)
+    except EmptyPage:
+        if request.is_ajax():
+        # If the request is AJAX and the page is out of range
+        # return an empty page
+            return HttpResponse('')
+        # If page is out of range deliver last page of results
+        images = paginator.page(paginator.num_pages)
+    #but intial load will be false for is_ajax
+    #Ajax is called when user scroll down
+    if request.is_ajax():
+        return render(request,'images/image/list_ajax.html',{'section': 'images', 'images': images})
+    return render(request,'images/image/list.html',{'section': 'images', 'images': images})
