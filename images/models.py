@@ -11,6 +11,7 @@ class Image(models.Model):
         related_name="images_created",
         on_delete=models.CASCADE,
     )
+    total_likes = models.PositiveIntegerField(db_index=True,default=0)
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, blank=True)
     url = models.URLField()

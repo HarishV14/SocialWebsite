@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     "django_extensions",
     "images.apps.ImagesConfig",
     "easy_thumbnails",
+    "actions.apps.ActionsConfig",
+
 ]
 
 MIDDLEWARE = [
@@ -163,3 +165,6 @@ ABSOLUTE_URL_OVERRIDES = {
 }
 
 # THUMBNAIL_DEBUG = True
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379
+REDIS_DB = 0
