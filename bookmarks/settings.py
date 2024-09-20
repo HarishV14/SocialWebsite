@@ -153,3 +153,13 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY")
 # Google Consumer Key
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET")
 # Google Consumer S
+
+from django.urls import reverse_lazy
+
+# URL generation for the auth.user model (i.e., Django's built-in User model) 
+# by specifying a custom URL pattern using reverse_lazy()
+ABSOLUTE_URL_OVERRIDES = {
+    "auth.user": lambda u: reverse_lazy("user_detail", args=[u.username])
+}
+
+# THUMBNAIL_DEBUG = True

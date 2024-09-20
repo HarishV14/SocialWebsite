@@ -66,7 +66,7 @@ def image_like(request):
 from django.http import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
- """
+"""
     @ it also includes the ajax for pagination when scrolling it mixed of ajax
       and both non ajax 
     @ in intial there is no ajax called this were checked by request.is_ajax 
@@ -97,3 +97,5 @@ def image_list(request):
     if request.is_ajax():
         return render(request,'images/image/list_ajax.html',{'section': 'images', 'images': images})
     return render(request,'images/image/list.html',{'section': 'images', 'images': images})
+
+
